@@ -14,25 +14,25 @@
             <div class="table-responsive scrollber">
                 <table class="table text-center table-bordered table-sm">
                     <thead>
-                        <th class=" font-weight-semibold">Purchase No</th>
-                        <th class=" font-weight-semibold">Product Name</th>
-                        <th class=" font-weight-semibold">Supplier</th>
-                        <th class=" font-weight-semibold">Category</th>
-                        <th class=" font-weight-semibold">Quantity</th>
-                        <th class=" font-weight-semibold">Status</th>
-                        <th class=" font-weight-semibold">Created_by</th>
-                        <th class=" font-weight-semibold">Action</th>
+                        <th style="font-weight: 500;">Purchase No</th>
+                        <th style="font-weight: 500;">Product Name</th>
+                        <th style="font-weight: 500;">Supplier</th>
+                        <th style="font-weight: 500;">Category</th>
+                        <th style="font-weight: 500;">Quantity</th>
+                        <th style="font-weight: 500;">Status</th>
+                        <th style="font-weight: 500;">Created_by</th>
+                        <th style="font-weight: 500;">Action</th>
                     </thead>
                     <tbody>
                         @if ($Purchase->count() > 0)
 
                         @foreach ($Purchase as $Purchases)
                         <tr>
-                            <td>pur no</td>
-                            <td>p.Name</td>
-                            <td>supplier</td>
-                            <td>category</td>
-                            <td>quantity</td>
+                            <td>{{ $Purchases->purchase_no }}</td>
+                            <td>{{ $Purchases->product_id }}</td>
+                            <td>{{ $Purchases->supplier_id }}</td>
+                            <td>{{ $Purchases->category_id }}</td>
+                            <td>{{ $Purchases->buying_qty }}</td>
                             <td>
                                 @if ($Purchases->status == true)
                                     <span class="badge badge-success">Active</span>
@@ -50,13 +50,13 @@
 
                                       <a class="dropdown-item" href="{{ route('purchase.edit', $Purchases->id) }}"> Edit </a>
 
-                                        <button class="dropdown-item" style="cursor: pointer;" type="button" onclick="delete_purchase({{ $purchases->id }})">Delete
+                                        {{-- <button class="dropdown-item" style="cursor: pointer;" type="button" onclick="delete_purchase({{ $purchases->id }})">Delete
                                         </button>
 
                                         <form id="delete-purchase-{{ $purchases->id }}" action="{{ route('product.destroy',$purchases->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                        </form>
+                                        </form> --}}
                                     </div>
                                 </div>
                             </td>

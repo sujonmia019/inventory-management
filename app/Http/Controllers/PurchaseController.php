@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Purchase;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PurchaseController extends Controller
 {
@@ -38,7 +39,43 @@ class PurchaseController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        if($request->category_id != NULL){
+
+            $count = count($request->category_id);
+            for ($i=0; $i < $count; $i++) {
+                $Create = Purchase::create([
+                    'supplier_id'   =>  $request->supplier_id[$i],
+                    'category_id'   =>  $request->category_id[$i],
+                    'product_id'   =>  $request->product_id[$i],
+                    'purchase_no'   =>  $request->purchase_no[$i],
+                    'purchase_date'   => date('Y-m-d', strtotime($request->purchase_date[$i])),
+                    'description'   =>  $request->description[$i],
+                    'buying_qty'   =>  $request->buying_qty[$i],
+                    'unit_price'   =>  $request->unit_price[$i],
+                    'buying_price'   =>  $request->buying_price[$i],
+                    'status'        =>  false,
+                    'created_by'        =>  Auth::user()->id
+                ]);
+            }
+
+            if ($Create) {
+                $notification = array(
+                    'message'   =>  'Purchase data created successfull:)',
+                    'alert-type'    =>  'success'
+                );
+
+                return redirect()->route('purchase.index')->with($notification);
+            }
+
+        }else{
+            $notification = array(
+                'message'   =>  'Sorry! you do not select any item',
+                'alert-type'    =>  'error'
+            );
+
+            return redirect()->back()->with($notification);
+        }
+
     }
 
     /**

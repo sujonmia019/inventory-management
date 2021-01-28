@@ -17,7 +17,7 @@ class Purchase extends Model
         'category_id',
         'product_id',
         'purchase_no',
-        'date',
+        'purchase_date',
         'description',
         'buying_qty',
         'unit_price',
