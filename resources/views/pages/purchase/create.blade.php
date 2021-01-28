@@ -4,6 +4,9 @@
 @push('styles')
 <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 <style>
+.my-class{
+    padding: 50px !important;
+}
 .custom-file-inputs {
   color: transparent;
 }
@@ -101,13 +104,13 @@ input#uploads:focus {
                             <th style="font-weight: 500;">Action</th>
                         </thead>
                         <tbody id="addRow">
-
+                            <p class="tests"></p>
                         </tbody>
                         <tbody>
                             <tr>
                                 <td colspan="5"></td>
                                 <td>
-                                    <input type="number" name="total_price" id="total_price" value="0" class="form-control form-control-sm rounded-0" style="background: #D8FDBA;">
+                                    <input type="number" name="total_price" id="total_price" value="0" class="form-control form-control-sm rounded-0" style="background: #D8FDBA;" readonly>
                                 </td>
                                 <td></td>
                             </tr>
@@ -115,7 +118,7 @@ input#uploads:focus {
                     </table>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-sm btn-color rounded-0 shadow-sm">Submit</button>
+                    <button type="submit" class="btn btn-sm btn-color btn-click rounded-0 shadow-sm">Submit</button>
                 </div>
             </form>
         </div>
@@ -144,64 +147,64 @@ input#uploads:focus {
                 <input type="number" min="1" class="form-control form-control-sm text-right buying_qty" name="buying_qty[]" value="1">
             </td>
             <td>
-                <input type="number" class="form-control form-control-sm text-right unit_price" name="unit_price" value="">
+                <input type="number" class="form-control form-control-sm text-right unit_price" name="unit_price[]" value="">
             </td>
             <td>
                 <input type="text" name="description[]" class="form-control form-control-sm">
             </td>
             <td>
-                <input class="form-control form-control-sm text-right buying_price" name="buying_price[]" value="0" readonly>
+                <input type="number" class="form-control form-control-sm text-right buying_price" name="buying_price[]" value="0" readonly>
             </td>
             <td>
-                <a class="btn btn-sm btn-color rounded-circle shadow-sm addEvenRemoved"><i class="fa fa-plus fa-sm"></i></a>
+                <a style="padding: 5px 8px;" class="btn btn-sm btn-danger text-light rounded-circle shadow-sm addEvenRemoved"><i class="fa fa-minus fa-sm"></i></a>
             </td>
         </tr>
     </script>
 
     <script>
-        (function($){
+        $(document).ready(function(){
 
-            $(document).on('click','.addEventMore', function(){
-                // var purchase_date = $('#purchase_date').val();
-                // var purchase_no = $('#purchase_no').val();
-                // var supplier_id = $('#supplier_id').val();
-                // var category_id = $('#category_id').val();
-                // var category_name = $('#category_id').find('option:selected').text();
-                // var product_id = $('#product_id').val();
-                // var product_name = $('#product_id').find('option:selected').text();
+            $('.addEventMore').on('click', function(){
+                var purchase_date = $('#purchase_date').val();
+                var purchase_no = $('#purchase_no').val();
+                var supplier_id = $('#supplier_id').val();
+                var category_id = $('#category_id').val();
+                var category_name = $('#category_id').find('option:selected').text();
+                var product_id = $('#product_id').val();
+                var product_name = $('#product_id').find('option:selected').text();
 
-                // if(purchase_date == ''){
-                //     toastr.error('Purchase date is required');
-                //     return false;
-                // }
-                // if(purchase_no == ''){
-                //     toastr.error('Purchase no is required');
-                //     return false;
-                // }
-                // if(supplier_id == ''){
-                //     toastr.error('Supplier is required');
-                //     return false;
-                // }
-                // if(category_id == ''){
-                //     toastr.error('Category is required');
-                //     return false;
-                // }
-                // if(product_id == ''){
-                //     toastr.error('Product is required');
-                //     return false;
-                // }
+                if(purchase_date == ''){
+                    toastr.error('Purchase date is required');
+                    return false;
+                }
+                if(purchase_no == ''){
+                    toastr.error('Purchase no is required');
+                    return false;
+                }
+                if(supplier_id == ''){
+                    toastr.error('Supplier is required');
+                    return false;
+                }
+                if(category_id == ''){
+                    toastr.error('Category is required');
+                    return false;
+                }
+                if(product_id == ''){
+                    toastr.error('Product is required');
+                    return false;
+                }
 
                 var source = document.getElementById("entry-template").innerHTML;
                 var template = Handlebars.compile(source);
-                // var data = {
-                //     purchase_date:purchase_date,
-                //     purchase_no:purchase_no,
-                //     supplier_id:supplier_id,
-                //     category_id:category_id,
-                //     category_name:category_name,
-                //     product_id:product_id,
-                //     product_name:product_name
-                // }
+                var data = {
+                    purchase_date:purchase_date,
+                    purchase_no:purchase_no,
+                    supplier_id:supplier_id,
+                    category_id:category_id,
+                    category_name:category_name,
+                    product_id:product_id,
+                    product_name:product_name
+                }
 
                 var html = template(data);
                 $('#addRow').append(html);
@@ -212,27 +215,28 @@ input#uploads:focus {
                 totalAmountPrice();
             });
 
-            $(document).on('keyup click', '.unit_price,.buying_qty', function(){
+            $(document).on('keyup click', '.buying_qty,.unit_price', function(){
                 var unit_price  = $(this).closest('tr').find('input.unit_price').val();
                 var qty  = $(this).closest('tr').find('input.buying_qty').val();
                 var total = unit_price * qty;
-                $(this).closest('tr').find('input.buying_price').val();
+                $(this).closest('tr').find('input.buying_price').val(total);
                 totalAmountPrice();
             });
 
             function totalAmountPrice(){
                 var sum = 0;
-                $('.buying_price'.each(function(){
+                $('.buying_price').each(function(){
                     var value = $(this).val();
-                    if(!isNaN(value) && value.length ! =0){
+                    if(!isNaN(value) && value.length !=0){
                         sum += parseFloat(value);
                     }
-                }));
+                });
                 $('#total_price').val(sum);
             }
 
-        })(jQuery);
+        });
     </script>
+
 
     <script>
         (function($){
@@ -277,7 +281,6 @@ input#uploads:focus {
             $('.datepicker').datepicker({
                 uiLibrary: 'bootstrap4'
             });
-
 
 
         })(jQuery);
