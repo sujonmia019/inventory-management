@@ -97,7 +97,7 @@ input#uploads:focus {
                         <thead>
                             <th style="font-weight: 500;">Category</th>
                             <th style="font-weight: 500;">Product Name</th>
-                            <th style="font-weight: 500;" width="7%">Pcs/KG</th>
+                            <th style="font-weight: 500;" width="7%">Unit</th>
                             <th style="font-weight: 500;" width="10%">Units Price</th>
                             <th style="font-weight: 500;">Description</th>
                             <th style="font-weight: 500;" width="10%">Total Price</th>

@@ -16,7 +16,7 @@ class PurchaseController extends Controller
      */
     public function index()
     {
-        $Purchase = Purchase::latest()->paginate(10);
+        $Purchase = Purchase::with('product','supplier','category','user')->latest()->paginate(20);
         return view('pages.purchase.index', compact('Purchase'));
     }
 

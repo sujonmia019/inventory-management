@@ -14,7 +14,9 @@
             <div class="table-responsive scrollber">
                 <table class="table text-center table-bordered table-sm">
                     <thead>
+                        <th style="font-weight: 500;">SL</th>
                         <th style="font-weight: 500;">Purchase No</th>
+                        <th style="font-weight: 500;">Date</th>
                         <th style="font-weight: 500;">Product Name</th>
                         <th style="font-weight: 500;">Supplier</th>
                         <th style="font-weight: 500;">Category</th>
@@ -28,11 +30,13 @@
 
                         @foreach ($Purchase as $Purchases)
                         <tr>
+                            <td>{{ $Purchase->firstItem()+$loop->index }}</td>
                             <td>{{ $Purchases->purchase_no }}</td>
-                            <td>{{ $Purchases->product_id }}</td>
-                            <td>{{ $Purchases->supplier_id }}</td>
-                            <td>{{ $Purchases->category_id }}</td>
-                            <td>{{ $Purchases->buying_qty }}</td>
+                            <td>{{ date('d M y', strtotime($Purchases->purchase_date)) }}</td>
+                            <td>{{ $Purchases->product->name }}</td>
+                            <td>{{ $Purchases->supplier->name }}</td>
+                            <td>{{ $Purchases->category->name }}</td>
+                            <td>{{ $Purchases->buying_qty }} {{ $Purchases->product->unit->name }}</td>
                             <td>
                                 @if ($Purchases->status == true)
                                     <span class="badge badge-success">Active</span>
@@ -40,7 +44,7 @@
                                     <span class="badge badge-danger">Pending</span>
                                 @endif
                             </td>
-                            <td>users</td>
+                            <td>{{ $Purchases->user->name }}</td>
                             <td>
                                 <div class="dropdown show">
                                     <a class="dropdown-toggle no-arrow" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -49,14 +53,15 @@
                                     <div class="dropdown-menu dropdown-menu-right" x-placement="top-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-84px, -79px, 0px);">
 
                                       <a class="dropdown-item" href="{{ route('purchase.edit', $Purchases->id) }}"> Edit </a>
+                                        @if ($Purchases->status == false)
+                                            <button class="dropdown-item" style="cursor: pointer;" type="button" onclick="delete_purchase({{ $Purchases->id }})">Delete
+                                            </button>
 
-                                        {{-- <button class="dropdown-item" style="cursor: pointer;" type="button" onclick="delete_purchase({{ $purchases->id }})">Delete
-                                        </button>
-
-                                        <form id="delete-purchase-{{ $purchases->id }}" action="{{ route('product.destroy',$purchases->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                        </form> --}}
+                                            <form id="delete-purchase-{{ $Purchases->id }}" action="{{ route('product.destroy',$Purchases->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
+                                        @endif
                                     </div>
                                 </div>
                             </td>
@@ -83,7 +88,7 @@
 
 @push('scripts')
     <script>
-        function delete_product(id){
+        function delete_purchase(id){
 
             Swal.fire({
                 title: 'Are you sure?',
@@ -96,7 +101,7 @@
             /* Read more about isConfirmed, isDenied below */
                 if (result.isConfirmed) {
                     event.preventDefault();
-                    document.getElementById('delete-product-'+id).submit();
+                    document.getElementById('delete-purchase-'+id).submit();
                     Swal.fire('Deleted Successfull!', '', 'success')
                 } else  {
                     Swal.fire('Your data saved', '', 'info')

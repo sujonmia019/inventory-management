@@ -22,19 +22,19 @@ class Product extends Model
     ];
 
     public function user(){
-        return $this->hasOne(User::class,'id','created_by');
+        return $this->belongsTo(User::class,'created_by','id');
     }
 
     public function supplier(){
-        return $this->hasOne(Supplier::class,'id','supplier_id');
+        return $this->belongsTo(Supplier::class,'supplier_id','id');
     }
 
     public function category(){
-        return $this->hasOne(Category::class,'id','category_id');
+        return $this->belongsTo(Category::class,'category_id','id');
     }
 
     public function unit(){
-        return $this->hasOne(Unit::class,'id','unit_id');
+        return $this->belongsTo(Unit::class,'unit_id','id');
     }
 
 }
