@@ -11,14 +11,17 @@ class CreatePurchasesTable extends Migration
      *
      * @return void
      */
+
     public function up()
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
-            $table->integer('supplier_id');
-            $table->integer('unit_id');
-            $table->integer('category_id');
-            $table->integer('product_id');
+            $table->unsignedBigInteger('supplier_id');
+            $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('cascade');
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->integer('purchase_no');
             $table->date('date');
             $table->string('description')->nullable();
