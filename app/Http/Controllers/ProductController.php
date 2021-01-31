@@ -47,8 +47,7 @@ class ProductController extends Controller
             'product_name'  =>  'required',
             'supplier_name'  =>  'required',
             'category_name'  =>  'required',
-            'unit_name'  =>  'required',
-            'quantity'  =>  'required'
+            'unit_name'  =>  'required'
         ]);
 
         if (isset($request->publish) != NULL) {
@@ -63,7 +62,7 @@ class ProductController extends Controller
             'supplier_id'  =>  $request->supplier_name,
             'category_id'  =>  $request->category_name,
             'unit_id'  =>  $request->unit_name,
-            'quantity'  =>  $request->quantity,
+            'quantity'  =>  0,
             'status'  =>  $publish,
             'created_by'  =>  Auth::user()->id
         ]);
@@ -117,8 +116,7 @@ class ProductController extends Controller
             'product_name'  =>  'required',
             'supplier_name'  =>  'required',
             'category_name'  =>  'required',
-            'unit_name'  =>  'required',
-            'quantity'  =>  'required'
+            'unit_name'  =>  'required'
         ]);
 
         if (isset($request->publish) != NULL) {
@@ -133,7 +131,7 @@ class ProductController extends Controller
             'supplier_id'  =>  $request->supplier_name,
             'category_id'  =>  $request->category_name,
             'unit_id'  =>  $request->unit_name,
-            'quantity'  =>  $request->quantity,
+            'quantity'  =>  0,
             'status'  =>  $publish,
             'created_by'  =>  Auth::user()->id
         ]);

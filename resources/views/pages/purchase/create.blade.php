@@ -51,7 +51,7 @@ input#uploads:focus {
             <div class="form-row">
                 <div class="col-xl-4 col-sm-6 col-12 form-group">
                     <label>Purchase Date<span class="text-danger">*</span></label>
-                    <input type="text" id="purchase_date" name="purchase_date" class="rounded-0 datepicker">
+                    <input type="text" id="purchase_date" name="purchase_date" class="rounded-0 datepicker" placeholder="dd--mm--yy" autocomplete="off">
                     @error('purchase_date')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
