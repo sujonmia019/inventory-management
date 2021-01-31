@@ -9,6 +9,10 @@
     color: #fff;
 }
 
+input.select2-search__field:focus {
+    outline: 0 !important;
+}
+
 .flag-icon-background {
     background-size: contain;
     background-position: 50%;
@@ -30715,7 +30719,6 @@ a:focus {
     box-sizing: border-box;
     cursor: pointer;
     display: block;
-    height: 28px;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
@@ -30724,8 +30727,6 @@ a:focus {
 
 .select2-container .select2-selection--single .select2-selection__rendered {
     display: block;
-    padding-left: 8px;
-    padding-right: 20px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap
@@ -30876,20 +30877,30 @@ a:focus {
 }
 
 .select2-container--default .select2-selection--single {
-    background-color: #fff;
-    border: 1px solid #aaa;
-    border-radius: 4px
+    border: 1px solid #ced4da;
+    padding: .88rem 1.3rem;
+    height: calc(3.2rem + 2px)
 }
+
+span#select2-supplier_id-container:focus-visible {
+    outline: 0;
+    border-radius: 0;
+    border: 1px solid #ced4da;
+}
+
+.select2.select2-container.select2-container--default.select2-container--below.select2-container--focus {
+    outline: 0;
+}
+
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
     color: #444;
-    line-height: 28px
 }
 
 .select2-container--default .select2-selection--single .select2-selection__clear {
     cursor: pointer;
     float: right;
-    font-weight: bold
+    font-weight: normal
 }
 
 .select2-container--default .select2-selection--single .select2-selection__placeholder {
@@ -30897,11 +30908,11 @@ a:focus {
 }
 
 .select2-container--default .select2-selection--single .select2-selection__arrow {
-    height: 26px;
     position: absolute;
-    top: 1px;
+    top: 0;
     right: 1px;
-    width: 20px
+    width: 20px;
+    bottom: 0
 }
 
 .select2-container--default .select2-selection--single .select2-selection__arrow b {
@@ -31004,11 +31015,6 @@ a:focus {
 .select2-container--default[dir="rtl"] .select2-selection--multiple .select2-selection__choice__remove {
     margin-left: 2px;
     margin-right: auto
-}
-
-.select2-container--default.select2-container--focus .select2-selection--multiple {
-    border: solid black 1px;
-    outline: 0
 }
 
 .select2-container--default.select2-container--disabled .select2-selection--multiple {

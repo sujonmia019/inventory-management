@@ -62,7 +62,7 @@ input#uploads:focus {
                 </div>
                 <div class="col-xl-4 col-sm-12 col-12 form-group">
                     <label>Supplier<span class="text-danger">*</span></label>
-                    <select name="supplier_id" id="supplier_id" class="form-control form-control-sm rounded-0">
+                    <select name="supplier_id" id="supplier_id" class="form-control form-control-sm rounded-0 select2">
                         <option value="">Select Supplier</option>
                         @foreach ($Supplier as $Suppliers)
                         <option value="{{ $Suppliers->id }}">{{ $Suppliers->name }}</option>
@@ -74,13 +74,13 @@ input#uploads:focus {
             <div class="form-row">
                 <div class="col-xl-4 col-sm-6 col-12 form-group">
                     <label>Category<span class="text-danger">*</span></label>
-                    <select name="category_id" id="category_id" class="form-control form-control-sm rounded-0">
+                    <select name="category_id" id="category_id" class="select2 form-control form-control-sm rounded-0">
                         {{-- ajax option call  --}}
                     </select>
                 </div>
                 <div class="col-xl-4 col-sm-6 col-12 form-group">
                     <label>Product Name<span class="text-danger">*</span></label>
-                    <select name="product_id" id="product_id" class="form-control form-control-sm rounded-0">
+                    <select name="product_id" id="product_id" class="select2 form-control form-control-sm rounded-0">
                         {{-- ajax option call  --}}
                     </select>
                 </div>
@@ -281,6 +281,9 @@ input#uploads:focus {
             $('.datepicker').datepicker({
                 uiLibrary: 'bootstrap4'
             });
+
+            // select2
+            $('.select2').select2();
 
 
         })(jQuery);
