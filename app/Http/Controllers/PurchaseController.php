@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
@@ -120,6 +121,32 @@ class PurchaseController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $Delete = Purchase::findOrFail($id)->delete();
+        $notification = array(
+            'message'   =>  'Purchase deleted successfull:)',
+            'alert-type'    =>  'success'
+        );
+
+        return redirect()->back()->with($notification);
     }
+
+    // Purchase Approve
+    public function purchaseApprove($id){
+        $UpdatePurchase = Purchase::findOrFail($id);
+        $Product = Product::where('id', $UpdatePurchase->product_id)->first();
+        $Product_qty = $UpdatePurchase->buying_qty + $Product->quantity;
+        $Product->quantity = $Product_qty;
+        if($Product->save()){
+            Purchase::where('id',$id)->update([
+                'status'    =>  true
+            ]);
+        }
+        $notification = array(
+            'message'   =>  'Purchase approved successfull:)',
+            'alert-type'    =>  'success'
+        );
+
+        return redirect()->back()->with($notification);
+    }
+
 }

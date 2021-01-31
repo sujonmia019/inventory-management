@@ -45,20 +45,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('product', ProductController::class);
     // Purchase
     Route::resource('purchase', PurchaseController::class);
+    Route::get('purchase/approve/{id}', [PurchaseController::class,'purchaseApprove'])->name('purchase.approved');
     // Ajax Category
     Route::get('categorys', [AjaxController::class,'getCategory'])->name('categories');
     // Ajax Category
     Route::get('products', [AjaxController::class,'getProduct'])->name('products');
 
 });
-
-
-
-
-
-
-
-
-
-
-
