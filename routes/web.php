@@ -51,6 +51,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('categorys', [AjaxController::class,'getCategory'])->name('categories');
     // Ajax Category
     Route::get('products', [AjaxController::class,'getProduct'])->name('products');
+    // Ajax Product Stock
+    Route::get('product-stock', [AjaxController::class,'getProductStock'])->name('product.stock');
     // Invoice
     Route::resource('invoice', InvoiceController::class);
 

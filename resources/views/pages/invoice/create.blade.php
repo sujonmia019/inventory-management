@@ -50,42 +50,40 @@ input#uploads:focus {
         </div>
         <div class="card-body">
             <div class="form-row">
-                <div class="col-xl-4 col-sm-6 col-12 form-group">
-                    <label>Purchase Date<span class="text-danger">*</span></label>
-                    <input type="text" id="purchase_date" name="purchase_date" class="rounded-0 datepicker" placeholder="dd--mm--yy" autocomplete="off">
-                    @error('purchase_date')
+                <div class="col-xl-2 col-sm-2 col-3 form-group">
+                    <label>Invoice No<span class="text-danger">*</span></label>
+                    <input name="invoice_no" id="invoice_no" type="text" value="{{ old('invoice_no') }}" class="form-control form-control-sm rounded-0" style="background: #D8FDBA;">
+                </div>
+
+                <div class="col-xl-2 col-sm-5 col-5 form-group">
+                    <label>Invoice Date<span class="text-danger">*</span></label>
+                    <input type="text" id="invoice_date" name="invoice_date" class="rounded-0 datepicker" placeholder="dd--mm--yy" autocomplete="off">
+                    @error('invoice_date')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class="col-xl-4 col-sm-6 col-12 form-group">
-                    <label>Purchase No<span class="text-danger">*</span></label>
-                    <input name="purchase_no" id="purchase_no" type="text" value="{{ old('Purchase_no') }}" class="form-control form-control-sm rounded-0" placeholder="purchase no" autocomplete="off">
-                </div>
-                <div class="col-xl-4 col-sm-12 col-12 form-group">
-                    <label>Supplier<span class="text-danger">*</span></label>
-                    <select name="supplier_id" id="supplier_id" class="form-control form-control-sm rounded-0 select2">
-                        <option value="">Select Supplier</option>
-                        @foreach ($Supplier as $Suppliers)
-                        <option value="{{ $Suppliers->id }}">{{ $Suppliers->name }}</option>
+
+                <div class="col-xl-3 col-sm-5 col-4 form-group">
+                    <label>Category Name<span class="text-danger">*</span></label>
+                    <select name="category_id" id="category_id" class="form-control form-control-sm rounded-0 select2">
+                        <option value="">Select Category</option>
+                        @foreach ($Category as $Categories)
+                        <option value="{{ $Categories->id }}">{{ $Categories->name }}</option>
                         @endforeach
                     </select>
                 </div>
-            </div>
 
-            <div class="form-row">
-                <div class="col-xl-4 col-sm-6 col-12 form-group">
-                    <label>Category<span class="text-danger">*</span></label>
-                    <select name="category_id" id="category_id" class="select2 form-control form-control-sm rounded-0">
-                        {{-- ajax option call  --}}
-                    </select>
-                </div>
-                <div class="col-xl-4 col-sm-6 col-12 form-group">
+                <div class="col-xl-3 col-sm-7 col-8 form-group">
                     <label>Product Name<span class="text-danger">*</span></label>
-                    <select name="product_id" id="product_id" class="select2 form-control form-control-sm rounded-0">
+                    <select name="product_id" id="product_id" class="product_id select2 form-control form-control-sm rounded-0">
                         {{-- ajax option call  --}}
                     </select>
                 </div>
-                <div class="col-xl-4 col-sm-6 col-12 form-group">
+                <div class="col-xl-1 col-sm-2 col-2 form-group">
+                    <label>Stock</label>
+                    <input type="text" name="product_stock" id="product_stock" class="form-control form-control-sm rounded-0" style="background: #D8FDBA;">
+                </div>
+                <div class="col-xl-1 col-sm-2 col-2 form-group">
                     <a style="margin-top: 25px;padding: 5px 8px;" class="btn btn-sm btn-color rounded-circle shadow-sm addEventMore"><i class="fa fa-plus fa-sm"></i></a>
                 </div>
             </div>
@@ -133,9 +131,8 @@ input#uploads:focus {
 
     <script id="entry-template" type="text/x-handlebars-template">
         <tr class="deleteAddMoreItem" id="deleteAddMoreItem">
-            <input type="hidden" name="purchase_date[]" value="@{{ purchase_date }}">
-            <input type="hidden" name="purchase_no[]" value="@{{ purchase_no }}">
-            <input type="hidden" name="supplier_id[]" value="@{{ supplier_id }}">
+            <input type="hidden" name="invoice_date[]" value="@{{ invoice_date }}">
+            <input type="hidden" name="invoice_no[]" value="@{{ invoice_no }}">
             <td>
                 <input type="hidden" name="category_id[]" value="@{{ category_id }}">
                 @{{ category_name }}
@@ -166,24 +163,19 @@ input#uploads:focus {
         $(document).ready(function(){
 
             $('.addEventMore').on('click', function(){
-                var purchase_date = $('#purchase_date').val();
-                var purchase_no = $('#purchase_no').val();
-                var supplier_id = $('#supplier_id').val();
+                var invoice_date = $('#invoice_date').val();
+                var invoice_no = $('#invoice_no').val();
                 var category_id = $('#category_id').val();
                 var category_name = $('#category_id').find('option:selected').text();
                 var product_id = $('#product_id').val();
                 var product_name = $('#product_id').find('option:selected').text();
 
-                if(purchase_date == ''){
-                    toastr.error('Purchase date is required');
+                if(invoice_no == ''){
+                    toastr.error('Invoice no is required');
                     return false;
                 }
-                if(purchase_no == ''){
-                    toastr.error('Purchase no is required');
-                    return false;
-                }
-                if(supplier_id == ''){
-                    toastr.error('Supplier is required');
+                if(invoice_date == ''){
+                    toastr.error('Invoice date is required');
                     return false;
                 }
                 if(category_id == ''){
@@ -198,9 +190,8 @@ input#uploads:focus {
                 var source = document.getElementById("entry-template").innerHTML;
                 var template = Handlebars.compile(source);
                 var data = {
-                    purchase_date:purchase_date,
-                    purchase_no:purchase_no,
-                    supplier_id:supplier_id,
+                    invoice_date:invoice_date,
+                    invoice_no:invoice_no,
                     category_id:category_id,
                     category_name:category_name,
                     product_id:product_id,
@@ -242,25 +233,8 @@ input#uploads:focus {
     <script>
         (function($){
 
-            // supplier wise category name ajax
-            $('#supplier_id').change(function(){
-                var supplier_id = $(this).val();
-                $.ajax({
-                    url: "{{ route('categories') }}",
-                    method: "GET",
-                    data: {supplier_id:supplier_id},
-                    success:function(response){
-                        var html = "<option value=''>Select Category</option>";
-                        $.each(response, function(key,value){
-                            html += '<option value="'+value.category_id+'">'+value.category.name+'</option>';
-                        });
 
-                        $('#category_id').html(html);
-                    }
-                });
-            });
-
-            // supplier wise product name ajax
+            // category wise product name ajax
             $('#category_id').change(function(){
                 var category_id = $(this).val();
                 $.ajax({
@@ -274,6 +248,19 @@ input#uploads:focus {
                         });
 
                         $('#product_id').html(html);
+                    }
+                });
+            });
+
+            // product wise product stock ajax
+            $('.product_id').change(function(){
+                var product_id = $(this).val();
+                $.ajax({
+                    url: "{{ route('product.stock') }}",
+                    method: 'GET',
+                    data: {product_id:product_id},
+                    success:function(response){
+                        $('#product_stock').val(response);
                     }
                 });
             });

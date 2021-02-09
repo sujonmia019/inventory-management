@@ -260,7 +260,7 @@ input#uploads:focus {
                 });
             });
 
-            // supplier wise product name ajax
+            // Category wise product name ajax
             $('#category_id').change(function(){
                 var category_id = $(this).val();
                 $.ajax({

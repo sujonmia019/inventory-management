@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Invoice;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
@@ -26,8 +27,8 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        $Supplier = Supplier::where('status', true)->latest()->get();
-        return view('pages.invoice.create', compact('Supplier'));
+        $Category = Category::where('status', true)->latest()->get();
+        return view('pages.invoice.create', compact('Category'));
     }
 
     /**
