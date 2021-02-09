@@ -15,6 +15,15 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('invoice_id');
+            $table->foreign('invoice_id')->references('id')->on('invoices');
+            $table->unsignedBigInteger('customer_id');
+            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->string('paid_status', 30)->nullable();
+            $table->double('paid_amount')->nullable();
+            $table->double('due_amount')->nullable();
+            $table->double('total_amount')->nullable();
+            $table->double('discount')->nullable();
             $table->timestamps();
         });
     }

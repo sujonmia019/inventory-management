@@ -20282,14 +20282,14 @@ a:focus {
 .dt-side-nav__header {
     position: relative;
     text-transform: capitalize;
-    padding: 20px 30px 12px 30px;
+    padding: 12px 30px 12px 30px;
     line-height: 1.2;
-    color: #038fde;
-    font-size: 1.6rem
+    color: #14577d;
+    font-size: 1.5rem
 }
 
 .dt-side-nav__header:not(:first-child) {
-    padding-top: 20px
+    padding-top: 12px
 }
 
 .dt-side-nav__text {
@@ -30874,6 +30874,10 @@ a:focus {
     position: absolute !important;
     width: 1px !important;
     white-space: nowrap !important
+}
+
+.form-group>span.select2 {
+    width: 100% !important;
 }
 
 .select2-container--default .select2-selection--single {

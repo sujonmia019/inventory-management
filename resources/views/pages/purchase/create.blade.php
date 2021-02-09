@@ -3,6 +3,7 @@
 
 @push('styles')
 <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
 <style>
 .my-class{
     padding: 50px !important;
