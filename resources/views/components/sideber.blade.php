@@ -110,16 +110,16 @@
             <!-- /menu header -->
 
             <!-- Menu Item -->
-            <li class="dt-side-nav__item {{ Request::is('purchase*') ? 'open' : '' }}">
-                <a href="javascript:void(0)" class="dt-side-nav__link dt-side-nav__arrow" title="Purchase Manage">
+            <li class="dt-side-nav__item {{ Request::is('invoice*') ? 'open' : '' }}">
+                <a href="javascript:void(0)" class="dt-side-nav__link dt-side-nav__arrow" title="Invoice Manage">
                     <i class="icon icon-editor icon-fw icon-sm"></i> <span class="dt-side-nav__text">Invoice</span>
                 </a>
 
                 <!-- Sub-menu -->
                 <ul class="dt-side-nav__sub-menu">
                     <li class="dt-side-nav__item">
-                        <a href="{{ route('purchase.index') }}"
-                            class="dt-side-nav__link {{ Request::is('purchase*') ? 'active' : '' }}"
+                        <a href="{{ route('invoice.index') }}"
+                            class="dt-side-nav__link {{ Request::is('invoice*') ? 'active' : '' }}"
                             title="Invoice View">
                             <span class=" dt-side-nav__text">Invoice View</span> </a>
                     </li>

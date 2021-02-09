@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UnitsController;
+use App\Http\Controllers\InvoiceController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -50,5 +51,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('categorys', [AjaxController::class,'getCategory'])->name('categories');
     // Ajax Category
     Route::get('products', [AjaxController::class,'getProduct'])->name('products');
+    // Invoice
+    Route::resource('invoice', InvoiceController::class);
 
 });
