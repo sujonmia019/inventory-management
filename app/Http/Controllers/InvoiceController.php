@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        $Invoice = Invoice::with('product','supplier','category','user')->latest()->paginate(20);
+        $Invoice = Invoice::with('product','category','user')->latest()->paginate(20);
         return view('pages.invoice.index', compact('Invoice'));
     }
 
@@ -27,8 +28,18 @@ class InvoiceController extends Controller
      */
     public function create()
     {
+        $Customer= Customer::latest()->where('status', true)->get();
         $Category = Category::where('status', true)->latest()->get();
-        return view('pages.invoice.create', compact('Category'));
+        // invoice no auto generate
+        $Invoice_no = Invoice::orderby('id','desc')->first();
+        if ($Invoice_no == NULL) {
+            $Invoice_no = 100000;
+            $Invoice_no = $Invoice_no + 1;
+        }
+        else{
+            $Invoice_no = $Invoice_no->invoice_no + 1;
+        }
+        return view('pages.invoice.create', compact('Category','Invoice_no','Customer'));
     }
 
     /**
@@ -39,7 +50,7 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $request->all();
     }
 
     /**
