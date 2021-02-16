@@ -26,16 +26,14 @@
                             </thead>
                             <tbody>
                                 @if ($Invoice->count() > 0)
-
                                     @foreach ($Invoice as $Invoices)
                                         <tr>
-                                            <td>{{ $Invoice->firstItem() + $loop->index }}</td>
+                                            <td>{{ $Invoice->firstItem()+$loop->index }}</td>
                                             <td>{{ $Invoices->invoice_no }}</td>
-                                            <td>{{ $Invoices->customer->name }}</td>
+                                            <td>customer name</td>
                                             <td>{{ date('d M y', strtotime($Invoices->invoice_date)) }}</td>
                                             <td>{{ $Invoices->description }}</td>
                                             <td>{{ $Invoices->created_by }}</td>
-                                            <td>{{ $Invoices->updated_by }}</td>
                                             <td>
                                                 @if ($Invoices->status == true)
                                                     <span class="badge badge-success">Active</span>

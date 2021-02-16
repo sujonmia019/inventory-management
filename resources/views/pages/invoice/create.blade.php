@@ -44,7 +44,7 @@ input#uploads:focus {
 <div class="dt-content">
     <div class="card shadow-lg rounded-0">
         <div class="card-header">
-            <h3 class="m-0 d-flex justify-content-between">Add New Purchase
+            <h3 class="m-0 d-flex justify-content-between">Add New Invoice
                 <a href="{{ route('invoice.index') }}" class="text-dark font-weight-normal">Back</a>
             </h3>
         </div>
@@ -57,7 +57,7 @@ input#uploads:focus {
 
                 <div class="col-xl-2 col-sm-5 col-5 form-group">
                     <label>Invoice Date<span class="text-danger">*</span></label>
-                    <input type="text" id="invoice_date" name="invoice_date" class="rounded-0 datepicker" placeholder="dd--mm--yy" autocomplete="off">
+                    <input type="text" id="invoice_date" name="invoice_date" class="rounded-0 datepicker" placeholder="dd--mm--yy" value="{{ $Date }}" autocomplete="off">
                     @error('invoice_date')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -108,14 +108,14 @@ input#uploads:focus {
                             <tr>
                                 <td colspan="4" class="text-right"><span>Discount</span></td>
                                 <td>
-                                    <input type="number" name="discount_price" id="discount_price" class="form-control form-control-sm" placeholder="Discount" readonly>
+                                    <input type="text" name="discount_price" id="discount_price" class="form-control form-control-sm text-right" placeholder="Discount Amount">
                                 </td>
                                 <td></td>
                             </tr>
                             <tr>
                                 <td colspan="4" class="text-right">Grand Total</td>
                                 <td>
-                                    <input type="number" name="total_price" id="total_price" value="0" class="form-control form-control-sm" style="background: #D8FDBA;" readonly>
+                                    <input type="number" name="total_price" id="total_price" value="0" class="form-control form-control-sm text-right" style="background: #D8FDBA;" readonly>
                                 </td>
                                 <td></td>
                             </tr>
@@ -127,7 +127,7 @@ input#uploads:focus {
                             <tr>
                                 <td colspan="4">
                                     <label class="font-weight-medium d-block">Customer Name</label>
-                                    <select name="customer_name" id="customer_name" class="form-control form-control-sm select2">
+                                    <select name="customer_id" id="customer_name" class="form-control form-control-sm select2">
                                         <option value="" selected>Select Status</option>
                                         @foreach ($Customer as $Customers)
                                         <option value="{{ $Customers->id }}">{{ $Customers->name }}</option>
@@ -139,11 +139,11 @@ input#uploads:focus {
                                     <label class="font-weight-medium">Paid Status</label>
                                     <select name="paid_status" id="paid_status" class="form-control form-control-sm">
                                         <option value="" selected>Select Status</option>
-                                        <option value="0">Partial Paid</option>
-                                        <option value="">Full Paid</option>
-                                        <option value="">Full Due</option>
+                                        <option value="partial_paid">Partial Paid</option>
+                                        <option value="full_paid">Full Paid</option>
+                                        <option value="full_due">Full Due</option>
                                     </select>
-                                    <input type="text" name="partial_paid" id="partial_paid" class="form-control form-control-sm" placeholder="Paid Amound">
+                                    <input type="text" name="partial_paid" id="partial_paid" class="form-control form-control-sm mt-1" placeholder="Paid Amound" autocomplete="off">
                                 </td>
                             </tr>
                             {{-- new customer  --}}
@@ -162,7 +162,7 @@ input#uploads:focus {
                     </table>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-sm btn-color btn-click rounded-0 shadow-sm">Submit</button>
+                    <button type="submit" id="submitBth" class="btn btn-sm btn-color btn-click rounded-0 shadow-sm">Submit</button>
                 </div>
             </form>
         </div>
@@ -190,7 +190,7 @@ input#uploads:focus {
                 <input type="number" min="1" class="form-control form-control-sm text-right selling_qty" name="selling_qty[]" value="1">
             </td>
             <td>
-                <input type="number" class="form-control form-control-sm text-right unit_price" name="unit_price[]" value="">
+                <input type="text" class="form-control form-control-sm text-right unit_price" name="unit_price[]" value="">
             </td>
             <td>
                 <input type="number" class="form-control form-control-sm text-right selling_price" name="selling_price[]" value="0" readonly>
@@ -254,6 +254,11 @@ input#uploads:focus {
                 var qty  = $(this).closest('tr').find('input.selling_qty').val();
                 var total = unit_price * qty;
                 $(this).closest('tr').find('input.selling_price').val(total);
+                $('#discount_price').trigger('keyup');
+            });
+
+            // Calculate Discount Price invoice
+            $(document).on('keyup click','#discount_price', function(){
                 totalAmountPrice();
             });
 
@@ -261,10 +266,15 @@ input#uploads:focus {
                 var sum = 0;
                 $('.selling_price').each(function(){
                     var value = $(this).val();
-                    if(!isNaN(value) && value.length !=0){
+                    if (!isNaN(value) && value.length != 0) {
                         sum += parseFloat(value);
                     }
                 });
+
+                var discount_price = parseFloat($('#discount_price').val());
+                if (!isNaN(discount_price) && discount_price.length != 0) {
+                    sum -= parseFloat(discount_price);
+                }
                 $('#total_price').val(sum);
             }
 
@@ -323,7 +333,7 @@ input#uploads:focus {
             $('#partial_paid').hide();
             $('#paid_status').change(function(){
                 var paid_status = $(this).val();
-                if (paid_status == '0') {
+                if (paid_status == 'partial_paid') {
                     $('#partial_paid').show();
                 }
                 else{

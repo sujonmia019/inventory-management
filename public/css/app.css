@@ -49,6 +49,15 @@ input.select2-search__field:focus {
     background-image: url(/images/vendor/flag-icon-css/flags/4x3/ae.svg?2c530f6449f3e5abd04b2df6be77ee0a)
 }
 
+nav.flex.items-center>div.flex {
+    display: none;
+}
+
+span.relative>svg,
+span.relative>a>svg {
+    width: 15px !important;
+}
+
 .flag-icon-ae.flag-icon-squared {
     background-image: url(/images/vendor/flag-icon-css/flags/1x1/ae.svg?23c174705b39d649ba4341c8f1c83aac)
 }
