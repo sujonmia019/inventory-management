@@ -110,7 +110,7 @@
             <!-- /menu header -->
 
             <!-- Menu Item -->
-            <li class="dt-side-nav__item {{ Request::is('invoice*') ? 'open' : '' }}">
+            <li class="dt-side-nav__item {{ Request::is('invoice*') || Request::is('invoices/approve') || Request::is('invoices/pendign') ? 'open' : '' }}">
                 <a href="javascript:void(0)" class="dt-side-nav__link dt-side-nav__arrow" title="Invoice Manage">
                     <i class="icon icon-editor icon-fw icon-sm"></i> <span class="dt-side-nav__text">Invoice</span>
                 </a>
@@ -119,18 +119,18 @@
                 <ul class="dt-side-nav__sub-menu">
                     <li class="dt-side-nav__item">
                         <a href="{{ route('invoice.index') }}"
-                            class="dt-side-nav__link {{ Request::is('invoice*') ? 'active' : '' }}"
+                            class="dt-side-nav__link {{ Request::is('invoice') || Request::is('invoice/create') ? 'active' : '' }}"
                             title="Invoice View">
                             <span class=" dt-side-nav__text">Invoice View</span> </a>
                     </li>
 
                     <li class="dt-side-nav__item">
-                        <a href="#" class="dt-side-nav__link" title="Invoice Pending">
+                        <a href="{{ route('invoice.pending.index') }}" class="dt-side-nav__link {{ Request::is('invoices/pending') ? 'active' : '' }}" title="Invoice Pending">
                             <span class="dt-side-nav__text">Invoice Pending</span> </a>
                     </li>
 
                     <li class="dt-side-nav__item">
-                        <a href="#" class="dt-side-nav__link" title="Invoice Approved">
+                        <a href="{{ route('invoice.approve.index') }}" class="dt-side-nav__link {{ Request::is('invoices/approve') ? 'active' : '' }}" title="Invoice Approved">
                             <span class="dt-side-nav__text">Invoice Approved</span> </a>
                     </li>
                 </ul>

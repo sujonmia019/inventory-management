@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AjaxController;
+use App\Http\Controllers\BasicController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
@@ -55,5 +56,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('product-stock', [AjaxController::class,'getProductStock'])->name('product.stock');
     // Invoice
     Route::resource('invoice', InvoiceController::class);
-
+    Route::get('invoices/approve', [BasicController::class, 'invoiceApprove'])->name('invoice.approve.index');
+    Route::get('invoices/pending', [BasicController::class, 'invoicepending'])->name('invoice.pending.index');
 });

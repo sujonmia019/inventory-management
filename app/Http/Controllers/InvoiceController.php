@@ -32,10 +32,10 @@ class InvoiceController extends Controller
     public function create()
     {
         $Customer= Customer::latest()->where('status', true)->get();
-        $Category = Category::where('status', true)->latest()->get();
+        $Category = Category::latest()->where('status', true)->get();
         $Date = Date('m-d-Y');
         // invoice no auto generate
-        $Invoice_no = Invoice::orderby('id','desc')->first();
+        $Invoice_no = Invoice::with('user','payment','customer')->orderby('id','desc')->first();
         if ($Invoice_no == NULL) {
             $Invoice_no = 100000;
             $Invoice_no = $Invoice_no + 1;
@@ -43,7 +43,7 @@ class InvoiceController extends Controller
         else{
             $Invoice_no = $Invoice_no->invoice_no + 1;
         }
-        return view('pages.invoice.create', compact('Category','Invoice_no','Customer','Date'));
+        return view('pages.invoice.create', compact('Customer','Category','Invoice_no','Date'));
     }
 
     /**
@@ -163,7 +163,7 @@ class InvoiceController extends Controller
      */
     public function show($id)
     {
-        //
+        return "<h1>Invoice details ".$id."</h1>";
     }
 
     /**
@@ -200,4 +200,7 @@ class InvoiceController extends Controller
         //
 
    }
+
+
+
 }

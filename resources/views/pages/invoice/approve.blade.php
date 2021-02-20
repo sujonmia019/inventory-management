@@ -6,7 +6,7 @@
         <div class="dt-content">
             <div class="card shadow-lg rounded-0">
                 <div class="card-header">
-                    <h3 class="m-0 d-flex justify-content-between">Invoice List
+                    <h3 class="m-0 d-flex justify-content-between">Invoice Approve
                         <a href="{{ route('invoice.create') }}" class="btn btn-sm rounded-0 shadow-sm text-light btn-color"><i
                                 class="fa fa-plus fa-sm"></i> Add New</a>
                     </h3>
@@ -22,30 +22,35 @@
                                 <th style="font-weight: 500;">created_by</th>
                                 <th style="font-weight: 500;">Amount</th>
                                 <th style="font-weight: 500;">Status</th>
+                                <th style="font-weight: 500;">Action</th>
                             </thead>
                             <tbody>
-                                @if ($Invoice->count() > 0)
-                                    @foreach ($Invoice as $Invoices)
+                                @if ($Approve->count() > 0)
+                                    @foreach ($Approve as $Approves)
                                         <tr>
-                                            <td>{{ $Invoice->firstItem()+$loop->index }}</td>
-                                            <td>#{{ $Invoices->invoice_no }}</td>
-                                            <td>{{ $Invoices->payment->customer->name }}</td>
-                                            <td>{{ date('d M y', strtotime($Invoices->invoice_date)) }}</td>
-                                            <td>{{ $Invoices->user->name }}</td>
-                                            <td>৳ {{ $Invoices->payment->total_amount }}</td>
+                                            <td>{{ $Approve->firstItem()+$loop->index }}</td>
+                                            <td>#{{ $Approves->invoice_no }}</td>
+                                            <td>{{ $Approves->payment->customer->name }}</td>
+                                            <td>{{ date('d M y', strtotime($Approves->invoice_date)) }}</td>
+                                            <td>{{ $Approves->user->name }}</td>
+                                            <td>৳ {{ $Approves->payment->total_amount }}</td>
                                             <td>
-                                                @if ($Invoices->status == true)
+                                                @if ($Approves->status == true)
                                                     <span class="badge badge-success">Active</span>
                                                 @else
                                                     <span class="badge badge-danger">Pending</span>
                                                 @endif
                                             </td>
+                                            <td>
+                                                <a href="{{ route('invoice.show', $Approves->id) }}" class="btn btn-sm btn-info text-light"><i class="fa fa-eye"></i></a>
+                                            </td>
                                         </tr>
+
                                     @endforeach
 
                                 @else
                                     <tr>
-                                        <td colspan="8" class="text-center text-danger">Purchase Not Found</td>
+                                        <td colspan="8" class="text-center text-danger">Invoice Approve Not Found</td>
                                     </tr>
                                 @endif
 
@@ -53,7 +58,7 @@
                         </table>
                     </div>
                     <div class="d-flex justify-content-end">
-                        {{ $Invoice->links() }}
+                        {{ $Approve->links() }}
                     </div>
                 </div>
             </div>
@@ -61,29 +66,3 @@
 
     @endsection
 
-    @push('scripts')
-        <script>
-            function delete_purchase(id) {
-
-                Swal.fire({
-                    title: 'Are you sure?',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Delete!'
-                }).then((result) => {
-                    /* Read more about isConfirmed, isDenied below */
-                    if (result.isConfirmed) {
-                        event.preventDefault();
-                        document.getElementById('delete-purchase-' + id).submit();
-                        Swal.fire('Deleted Successfull!', '', 'success')
-                    } else {
-                        Swal.fire('Your data saved', '', 'info')
-                    }
-                })
-
-            }
-
-        </script>
-    @endpush

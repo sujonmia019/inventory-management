@@ -20,4 +20,13 @@ class Invoice extends Model
         'approved_by'
     ];
 
+    public function user(){
+        return $this->hasOne(User::class,'id','created_by');
+    }
+
+    public function payment(){
+        return $this->belongsTo(Payment::class,'id','invoice_id');
+    }
+
+
 }
