@@ -41,7 +41,7 @@ class SupplierController extends Controller
         $request->validate([
             'photo' =>  'required|mimes:png,jpg,jpeg',
             'full_name' =>  'required|max:50',
-            'email' =>  'unique:suppliers,email',
+            'email' =>  'sometimes|email|unique:suppliers,email',
             'mobile' =>  'required|digits:11|unique:suppliers,mobile',
             'address' =>  'required|max:60',
         ]);

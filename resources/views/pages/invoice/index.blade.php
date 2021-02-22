@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@push('title', 'Purchase')
+@push('title', 'Invoice List')
 
     @section('content')
 
@@ -61,29 +61,4 @@
 
     @endsection
 
-    @push('scripts')
-        <script>
-            function delete_purchase(id) {
 
-                Swal.fire({
-                    title: 'Are you sure?',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Delete!'
-                }).then((result) => {
-                    /* Read more about isConfirmed, isDenied below */
-                    if (result.isConfirmed) {
-                        event.preventDefault();
-                        document.getElementById('delete-purchase-' + id).submit();
-                        Swal.fire('Deleted Successfull!', '', 'success')
-                    } else {
-                        Swal.fire('Your data saved', '', 'info')
-                    }
-                })
-
-            }
-
-        </script>
-    @endpush

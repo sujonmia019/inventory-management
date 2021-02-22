@@ -1,14 +1,14 @@
 @extends('layouts.app')
-@push('title', 'Purchase')
+@push('title', 'Invoice Pending')
 
     @section('content')
 
         <div class="dt-content">
             <div class="card shadow-lg rounded-0">
                 <div class="card-header">
-                    <h3 class="m-0 d-flex justify-content-between">Invoice Approve
+                    <h3 class="m-0 d-flex justify-content-between">Invoice Pending
                         <a href="{{ route('invoice.create') }}" class="btn btn-sm rounded-0 shadow-sm text-light btn-color"><i
-                                class="fa fa-plus fa-sm"></i> Add New</a>
+                                class="fa fa-plus fa-sm"></i> Add New Invoice</a>
                     </h3>
                 </div>
                 <div class="card-body">
@@ -42,7 +42,18 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="{{ route('invoice.show', $Pendings->id) }}" class="btn btn-sm btn-info text-light"><i class="fa fa-eye"></i></a>
+
+                                                <div>
+                                                    <a href="{{ route('invoice.approve.id', $Pendings->id) }}" class="bg-success text-light p-1" data-toggle="tooltip" data-placement="top" title="invoice active"><i class="fa fa-check fa-sm"></i></a>
+
+                                                    <button onclick="delete_invoice({{ $Pendings->id }})" style="cursor: pointer;" class="bg-danger border-0 text-light px-2 py-1" data-toggle="tooltip" data-placement="top" title="invoice delete"><i class="fa fa-trash-alt fa-sm"></i></button>
+
+                                                    <form id="delete-invoice-form-{{ $Pendings->id }}" action="{{ route('invoice.destroy', $Pendings->id) }}" method="POST">
+                                                        @method('DELETE')
+                                                        @csrf
+                                                    </form>
+                                                </div>
+
                                             </td>
                                         </tr>
 
@@ -65,4 +76,31 @@
         </div>
 
     @endsection
+
+    @push('scripts')
+        <script>
+            function delete_invoice(id) {
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Delete!'
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        event.preventDefault();
+                        document.getElementById('delete-invoice-form-' + id).submit();
+                        Swal.fire('Deleted Successfull!', '', 'success')
+                    } else {
+                        Swal.fire('Your data saved', '', 'info')
+                    }
+                })
+
+            }
+
+        </script>
+    @endpush
 

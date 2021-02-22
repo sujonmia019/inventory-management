@@ -56,6 +56,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('product-stock', [AjaxController::class,'getProductStock'])->name('product.stock');
     // Invoice
     Route::resource('invoice', InvoiceController::class);
-    Route::get('invoices/approve', [BasicController::class, 'invoiceApprove'])->name('invoice.approve.index');
-    Route::get('invoices/pending', [BasicController::class, 'invoicepending'])->name('invoice.pending.index');
+    Route::get('invoices/approve', [InvoiceController::class, 'invoiceApprove'])->name('invoice.approve.index');
+    Route::get('invoices/pending', [InvoiceController::class, 'invoicePending'])->name('invoice.pending.index');
+    Route::get('invoices/approve/{id}', [InvoiceController::class, 'invoiceApproveIdCall'])->name('invoice.approve.id');
 });

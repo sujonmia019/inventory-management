@@ -42,7 +42,13 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="{{ route('invoice.show', $Approves->id) }}" class="btn btn-sm btn-info text-light"><i class="fa fa-eye"></i></a>
+
+                                                <div>
+                                                    <a href="{{ route('invoice.approve.id', $Approves->id) }}" class="bg-success text-light p-1" data-toggle="tooltip" data-placement="top" title="invoice active"><i class="fa fa-check fa-sm"></i></a>
+
+                                                    <a href="{{ route('invoice.show', $Approves->id) }}" class="bg-info text-light p-1" data-toggle="tooltip" data-placement="top" title="invoice view"><i class="fa fa-eye fa-sm"></i></a>
+                                                </div>
+
                                             </td>
                                         </tr>
 

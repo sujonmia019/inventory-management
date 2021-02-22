@@ -20,7 +20,7 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        $Invoice = Invoice::latest()->paginate(18);
+        $Invoice = Invoice::with('user','payment')->latest()->paginate(20);
         return view('pages.invoice.index', compact('Invoice'));
     }
 
@@ -35,7 +35,7 @@ class InvoiceController extends Controller
         $Category = Category::latest()->where('status', true)->get();
         $Date = Date('m-d-Y');
         // invoice no auto generate
-        $Invoice_no = Invoice::with('user','payment','customer')->orderby('id','desc')->first();
+        $Invoice_no = Invoice::orderby('id','desc')->first();
         if ($Invoice_no == NULL) {
             $Invoice_no = 100000;
             $Invoice_no = $Invoice_no + 1;
@@ -197,10 +197,32 @@ class InvoiceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $Delete = Invoice::findOrFail($id)->delete();
+        InvoiceDetails::where('invoice_id', $id)->delete();
+        Payment::where('invoice_id', $id)->delete();
 
-   }
+        $notification = array(
+            'message'   =>  'Invoice deleted successfull',
+            'alert-type'    =>  'success'
+        );
 
+        return back()->with($notification);
+    }
 
+    // invoice approved index
+    public function invoiceApprove(){
+        $Approve = Invoice::latest()->where('status', false)->paginate(15);
+        return view('pages.invoice.approve', compact('Approve'));
+    }
+
+    // invoice pending index
+    public function invoicePending(){
+        $Pending = Invoice::latest()->where('status', false)->paginate(15);
+        return view('pages.invoice.pending', compact('Pending'));
+    }
+
+    public function invoiceApproveIdCall($id){
+        dd($id);
+    }
 
 }

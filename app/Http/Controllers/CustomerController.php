@@ -41,7 +41,7 @@ class CustomerController extends Controller
         $request->validate([
             'photo' =>  'required|mimes:png,jpg,jpeg',
             'full_name' =>  'required|max:50',
-            'email' =>  'unique:suppliers,email',
+            'email' =>  'sometimes|unique:customers,email',
             'mobile' =>  'required|digits:11|unique:customers,mobile',
             'address' =>  'required|max:60',
         ]);
