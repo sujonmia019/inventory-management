@@ -78,6 +78,8 @@ input#uploads:focus {
                     <select name="product_id" id="product_id" class="product_id select2 form-control form-control-sm rounded-0">
                         {{-- ajax option call  --}}
                     </select>
+                    <label>Purchace Price</label>
+                    <input type="text" class="form-control" id="product_price">
                 </div>
                 <div class="col-xl-1 col-sm-2 col-2 form-group">
                     <label>Stock</label>
@@ -313,6 +315,19 @@ input#uploads:focus {
                     data: {product_id:product_id},
                     success:function(response){
                         $('#product_stock').val(response);
+                    }
+                });
+            });
+
+            // product wise product stock ajax
+            $('.product_id').change(function(){
+                var product_id = $(this).val();
+                $.ajax({
+                    url: "{{ route('product.price') }}",
+                    method: 'GET',
+                    data: {product_id:product_id},
+                    success:function(response){
+                        $('#product_price').val(response);
                     }
                 });
             });

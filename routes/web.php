@@ -50,10 +50,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('purchase/approve/{id}', [PurchaseController::class,'purchaseApprove'])->name('purchase.approved');
     // Ajax Category
     Route::get('categorys', [AjaxController::class,'getCategory'])->name('categories');
-    // Ajax Category
+    // Ajax Product Name
     Route::get('products', [AjaxController::class,'getProduct'])->name('products');
     // Ajax Product Stock
     Route::get('product-stock', [AjaxController::class,'getProductStock'])->name('product.stock');
+    // Ajax Product Price
+    Route::get('product-price', [AjaxController::class,'getProductPrice'])->name('product.price');
     // Invoice
     Route::resource('invoice', InvoiceController::class);
     Route::get('invoices/approve', [InvoiceController::class, 'invoiceApprove'])->name('invoice.approve.index');

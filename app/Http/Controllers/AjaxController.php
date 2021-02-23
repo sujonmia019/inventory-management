@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Purchase;
 use Illuminate\Http\Request;
 
 class AjaxController extends Controller
@@ -29,6 +30,13 @@ class AjaxController extends Controller
         $Product_Stock = Product::where('id', $product_id)->first()->quantity;
 
         return response()->json($Product_Stock);
+    }
+
+    public function getProductPrice(Request $request){
+        $product_id = $request->product_id;
+        $Product_Price = Purchase::where('product_id', $product_id)->first()->unit_price;
+
+        return response()->json($Product_Price);
     }
 
 }
