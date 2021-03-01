@@ -44,7 +44,7 @@
                                             <td>
 
                                                 <div>
-                                                    <a href="{{ route('invoice.approve.id', $Pendings->id) }}" class="bg-success text-light p-1" data-toggle="tooltip" data-placement="top" title="invoice active"><i class="fa fa-check fa-sm"></i></a>
+                                                    <a href="{{ route('invoice.approve.id', $Pendings->id) }}" style="cursor: pointer;" class="border-0 bg-success text-light p-1" data-toggle="tooltip" data-placement="top" title="invoice active"> <i class="fa fa-check fa-sm"></i></a>
 
                                                     <button onclick="delete_invoice({{ $Pendings->id }})" style="cursor: pointer;" class="bg-danger border-0 text-light px-2 py-1" data-toggle="tooltip" data-placement="top" title="invoice delete"><i class="fa fa-trash-alt fa-sm"></i></button>
 
@@ -97,9 +97,10 @@
                     } else {
                         Swal.fire('Your data saved', '', 'info')
                     }
-                })
+                });
 
             }
+
 
         </script>
     @endpush

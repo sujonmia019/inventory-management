@@ -222,7 +222,10 @@ class InvoiceController extends Controller
     }
 
     public function invoiceApproveIdCall($id){
-        dd($id);
+        $ApproveInvoice = Invoice::findOrFail($id)->first();
+        $InvoiceDetail = InvoiceDetails::with('product','category')->where('invoice_id', $id)->get();
+        $Payment = Payment::where('invoice_id', $id)->first();
+        return view('pages.invoice.invoice-approve', compact('ApproveInvoice','InvoiceDetail','Payment'));
     }
 
 }
