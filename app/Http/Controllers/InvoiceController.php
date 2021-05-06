@@ -198,7 +198,7 @@ class InvoiceController extends Controller
      */
     public function destroy($id)
     {
-        $Delete = Invoice::findOrFail($id)->delete();
+        Invoice::findOrFail($id)->delete();
         InvoiceDetails::where('invoice_id', $id)->delete();
         Payment::where('invoice_id', $id)->delete();
 
@@ -212,7 +212,7 @@ class InvoiceController extends Controller
 
     // invoice approved index
     public function invoiceApprove(){
-        $Approve = Invoice::latest()->where('status', false)->paginate(15);
+        $Approve = Invoice::latest()->where('status', true)->whereNotNull('approved_by')->paginate(15);
         return view('pages.invoice.approve', compact('Approve'));
     }
 
@@ -232,20 +232,17 @@ class InvoiceController extends Controller
 
     // invoice approve
     public function invoiceApproveStore(Request $request, $id){
-        $invoice_id = $request->invoice_id;
-        $Invoice_Details = InvoiceDetails::where('id',$invoice_id)->get();
-        foreach ($Invoice_Details as $value) {
-            dd($value->unit_price);
-            // $invoice_details = InvoiceDetails::where('id', $value->id)->first();
-            // $product = Product::where('id', $invoice_details->product_id)->first();
-            // if ($product->quantity < $request->selling_qty[$value->selling_qty]) {
-            //     $notification = array(
-            //         'message'   =>  'Sorry! you approve maximum value',
-            //         'alert-type'    =>  'error'
-            //     );
+        foreach ($request->selling_qty as $key => $value) {
+            $invoice_details = InvoiceDetails::where('id', $key)->first();
+            $product = Product::where('id', $invoice_details->product_id)->first();
+            if ($product->quantity < $request->selling_qty[$key]) {
+                $notification = array(
+                    'message'   =>  'Sorry! you approve maximum value',
+                    'alert-type'    =>  'error'
+                );
 
-            //     return back()->with($notification);
-            // }
+                return back()->with($notification);
+            }
 
         }
 
@@ -254,21 +251,23 @@ class InvoiceController extends Controller
             'status' =>  true
         ]);
 
-        foreach ($Invoice_Details as $values) {
-            $invoice_details = InvoiceDetails::where('id', $values->id)->first();
-
-            $product = Product::where('id', $invoice_details->product_id)->first();
-            $$product->quantity = ($product->quantity - $invoice_selling[$key]);
+        foreach ($request->selling_qty as $key => $values) {
+            $invoice_details = InvoiceDetails::where('id', $key)->first();
+            $invoice_details->status = true;
+            $invoice_details->save();
+            $productName = Product::where('id', $invoice_details->product_id)->first();
+            $productQty = ((float)$productName->quantity) - ((float)$request->selling_qty[$key]);
+            Product::where('id', $invoice_details->product_id)->update([
+                'quantity'  =>  $productQty
+            ]);
         }
 
-        if ($product->quantity) {
-            $notification = array(
-                'message'   =>  'Invoice Approve Successfull',
-                'alert-type'    =>  'success'
-            );
+        $notification = array(
+            'message'   =>  'Invoice Approve Successfull',
+            'alert-type'    =>  'success'
+        );
 
-            return redirect()->route('invoice.approve.index')->back()->with($notification);
-        }
+        return redirect()->route('invoice.approve.index')->with($notification);
 
     }
 

@@ -95,7 +95,7 @@
                                             <td colspan="6" style="font-weight: 500; text-align: right; padding-right: 20px;">Due Amount</td>
                                             <td>
                                                 @if ($Payment->due_amount != NULL)
-                                                    {{ $Payment->due_amount }}
+                                                {{ $Payment->due_amount }}
                                                 @else
                                                     0
                                                 @endif

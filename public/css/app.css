@@ -22171,7 +22171,9 @@ a:focus {
     align-items: center;
     flex-wrap: wrap
 }
-
+.table th, .table td{
+    vertical-align: middle !important;
+}
 .dt-intro-card .action-area .dt-avatar {
     transition: all 0.2s ease-in-out;
     position: absolute;

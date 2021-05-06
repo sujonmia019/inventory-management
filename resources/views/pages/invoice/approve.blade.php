@@ -6,10 +6,7 @@
         <div class="dt-content">
             <div class="card shadow-lg rounded-0">
                 <div class="card-header">
-                    <h3 class="m-0 d-flex justify-content-between">Invoice Approve
-                        <a href="{{ route('invoice.create') }}" class="btn btn-sm rounded-0 shadow-sm text-light btn-color"><i
-                                class="fa fa-plus fa-sm"></i> Add New</a>
-                    </h3>
+                    <h3 class="m-0">Invoice Approve</h3>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive scrollber">
@@ -44,7 +41,7 @@
                                             <td>
 
                                                 <div>
-                                                    <a href="{{ route('invoice.show', $Approves->id) }}" class="bg-info text-light p-1" data-toggle="tooltip" data-placement="top" title="invoice view"><i class="fa fa-eye fa-sm"></i></a>
+                                                    <a href="{{ route('invoice.show', $Approves->id) }}" class="bg-info text-light px-3 py-1" data-toggle="tooltip" data-placement="top" title="invoice view"><i class="fa fa-eye fa-sm"></i></a>
                                                 </div>
 
                                             </td>

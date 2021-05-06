@@ -6,9 +6,7 @@
         <div class="dt-content">
             <div class="card shadow-lg rounded-0">
                 <div class="card-header">
-                    <h3 class="m-0 d-flex justify-content-between">Invoice Pending
-                        <a href="{{ route('invoice.create') }}" class="btn btn-sm rounded-0 shadow-sm text-light btn-color"><i
-                                class="fa fa-plus fa-sm"></i> Add New Invoice</a>
+                    <h3 class="m-0">Invoice Pending
                     </h3>
                 </div>
                 <div class="card-body">
