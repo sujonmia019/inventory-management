@@ -1,3 +1,3 @@
 <footer class="dt-footer">
-    Copyright developersujon.com © 2021
+    Develop by Sujon Mia © 2021
 </footer>

@@ -139,7 +139,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 a.logo_text {
   color: #000;
   font-size: 28px;
-  font-weight: 400;
+  font-weight: 500;
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -154,7 +154,7 @@ a.logo_text span {
   display: inline-block;
   padding: 3px 5px 3px;
   color: #fff;
-  font-weight: 600;
+  font-weight: 500;
   border-radius: 4px;
   margin-right: 10px;
 }
@@ -311,7 +311,7 @@ a.logo_text span {
   padding: 10px 35px 10px 0;
   font-size: 15px;
   outline: 0;
-  font-weight: 400;
+  font-weight: 300;
   color: #717171;
   height: 45px;
   border-radius: 0;
@@ -428,11 +428,7 @@ a.logo_text span {
   margin-bottom: 20px;
   font-size: 14px;
 }
-.form-check {
-    position: relative;
-    display: block;
-    padding-left: 0 !important;
-}
+
 .login_wrapper .login_form .form-check {
   float: left;
   margin-bottom: 0;

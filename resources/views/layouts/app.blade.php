@@ -2,26 +2,26 @@
 <html lang="en">
 
 <head>
-    <base href="{{ asset('/') }}">
+  <base href="{{ asset('/') }}">
   <!-- Meta tags -->
   <meta charset="utf-8">
+  <!-- CSRF Token -->
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Wieldy - A fully responsive, HTML5 based admin template">
-  <meta name="keywords" content="Responsive, HTML5, admin theme, business, professional, jQuery, web design, CSS3, sass">
   <!-- /meta tags -->
   <title>POS Software @stack('title')</title>
 
   <!-- Site favicon -->
-  <link rel="shortcut icon" href="assets/image/fev.png" type="image/x-icon">
+  <link rel="shortcut icon" href="{{ asset('assets/image/fev.png') }}" type="image/x-icon">
   <!-- /site favicon -->
-    @stack('styles')
-    <x-style/>
-    <link rel="stylesheet" href="css/app.css">
+  <x-style/>  
+  <link rel="stylesheet" href="{{ asset('css/app.css') }}">
   <!-- Load Styles -->
-  <link rel="stylesheet" href="assets/css/lite-style-1.min.css">
+  <link rel="stylesheet" href="{{ asset('assets/css/lite-style-1.min.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
   <!-- /load styles -->
+  @stack('styles')
 
 </head>
 <body class="dt-sidebar--fixed dt-header--fixed">
@@ -70,11 +70,11 @@
 
 
 <!-- Custom JavaScript -->
-<script src="js/app.js"></script>
+<script src="{{ asset('js/app.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-<script src="assets/js/perfect-scrollbar.min.js"></script>
-<script src="assets/js/dashboard-crypto.js"></script>
-<script src="assets/js/script.js"></script>
+<script src="{{ asset('assets/js/perfect-scrollbar.min.js') }}"></script>
+<script src="{{ asset('assets/js/dashboard-crypto.js') }}"></script>
+<script src="{{ asset('assets/js/script.js') }}"></script>
 
 <x-scripts/>
 

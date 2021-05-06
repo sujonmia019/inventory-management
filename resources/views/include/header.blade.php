@@ -16,7 +16,7 @@
             <!-- Brand logo -->
             <span class="dt-brand__logo">
                 <a class="dt-brand__logo-link" href="{{ asset('/') }}">
-                    <img class="" src="assets/img/logo-white.png" alt="Wieldy">
+                    <img class="" src="{{ asset('assets/img/logo-white.png') }}" alt="Wieldy">
                 </a>
             </span>
             <!-- /brand logo -->
@@ -30,12 +30,14 @@
             <!-- Header Menu Wrapper -->
             <div class="dt-nav-wrapper">
 
-                <!-- Header Menu -->
+                <!-- Header Notification -->
                 <ul class="dt-nav">
                     <li class="dt-nav__item dt-notification dropdown">
 
                         <!-- Dropdown Link -->
-                        <a href="#" class="dt-nav__link dropdown-toggle no-arrow" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="icon icon-notification icon-fw dt-icon-alert"></i>
+                        <a href="#" class="dt-nav__link dropdown-toggle no-arrow" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false"> <i
+                                class="icon icon-notification icon-fw dt-icon-alert"></i>
                         </a>
                         <!-- /dropdown link -->
 
@@ -61,8 +63,8 @@
                                     <a href="javascript:void(0)" class="media">
 
                                         <!-- Avatar -->
-                                        <img class="dt-avatar mr-3" src="assets/img/user-avatar/stella-johnson.jpg"
-                                            alt="User">
+                                        <img class="dt-avatar mr-3"
+                                            src="{{ asset('assets/img/user-avatar/stella-johnson.jpg') }}" alt="User">
                                         <!-- avatar -->
 
                                         <!-- Media Body -->
@@ -96,19 +98,26 @@
                     </li>
 
                 </ul>
-                <!-- /header menu -->
+                <!-- /header notification -->
 
                 <!-- Header Menu -->
-                <ul class="dt-nav d-lg-block d-none mt-4">
-                    <li class="dt-nav__item dropdown">
+                <ul class="dt-nav">
+                    <li class="dt-nav__item dropdown" style="min-width: 170px !important;">
 
                         <!-- Dropdown Option -->
                         <div class="dropdown-menu dropdown-menu-right w-100">
-                            <a class="dropdown-item" href="javascript:void(0)"> <i
-                                    class="icon icon-user-o icon-fw mr-2 mr-sm-1"></i>Account
-                            </a> <a class="dropdown-item" href="javascript:void(0)">
-                                <i class="icon icon-setting icon-fw mr-2 mr-sm-1"></i>Setting </a>
-                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> <i class="icon icon-edit icon-fw mr-2 mr-sm-1"></i>Logout
+                            <a class="dropdown-item" href="{{ route('profile.index') }}"> <i
+                                    class="icon icon-profile icon-fw mr-2 mr-sm-1"></i>Profile
+                            </a> 
+                            <a class="dropdown-item" href="{{ route('profile.password.change') }}"> <i
+                                class="fas fa-lock mr-2 mr-sm-1 text-center" style="width: 1.28571429em; color: #545454;"></i>Password Change
+                            </a>
+                            <a class="dropdown-item" href="javascript:void(0)">
+                                <i class="icon-setting icon icon-fw mr-2 mr-sm-1"></i>Setting 
+                            </a>
+                            
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> <i class="icon icon-edit icon-fw mr-2 mr-sm-1"></i>Logout
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
@@ -119,60 +128,23 @@
                         <!-- Dropdown Link -->
                         <a href="#" class="dt-nav__link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
-                            <img class="dt-avatar" src="assets/img/user-avatar/domnic-harris.jpg" alt="Domnic Harris">
+                            @php
+                                $user = Auth::user();
+                            @endphp
+                            <img class="dt-avatar" src="
+                            {{ $user->getFirstMediaUrl('avatar') ? $user->getFirstMediaUrl('avatar') : asset('assets/img/user-avatar/domnic-harris.jpg') }}
+                            " alt="Domnic Harris">
                             <span class="dt-avatar-info">
-                                <span class="dt-avatar-name">Bob Hyden</span>
+                                <span class="dt-avatar-name">{{ Auth::user()->name }}</span>
                             </span>
                         </a>
                         <!-- /dropdown link -->
 
-                        <!-- Dropdown Option -->
-                        <div class="dropdown-menu dropdown-menu-right w-100">
-                            <a class="dropdown-item" href="javascript:void(0)"> <i
-                                    class="icon icon-user-o icon-fw mr-2 mr-sm-1"></i>Account
-                            </a> <a class="dropdown-item" href="javascript:void(0)">
-                                <i class="icon icon-setting icon-fw mr-2 mr-sm-1"></i>Setting </a>
-                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> <i class="icon icon-edit icon-fw mr-2 mr-sm-1"></i>Logout
-                                </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                        </div>
-                        <!-- /dropdown option -->
 
                     </li>
                 </ul>
                 <!-- /header menu -->
 
-                <!-- Header Menu -->
-                <ul class="dt-nav d-lg-none">
-                    <li class="dt-nav__item dropdown">
-
-                        <!-- Dropdown Link -->
-                        <a href="#" class="dt-nav__link dropdown-toggle no-arrow dt-avatar-wrapper"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="dt-avatar size-40" src="assets/img/user-avatar/domnic-harris.jpg"
-                                alt="Domnic Harris">
-                        </a>
-                        <!-- /dropdown link -->
-
-                        <!-- Dropdown Option -->
-                        <div class="dropdown-menu dropdown-menu-right w-100">
-
-                            <a class="dropdown-item" href="javascript:void(0)"> <i class="icon icon-user-o icon-fw mr-2 mr-sm-1"></i>Account
-                            </a> <a class="dropdown-item" href="javascript:void(0)">
-                                <i class="icon icon-setting icon-fw mr-2 mr-sm-1"></i>Setting </a>
-                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> <i class="icon icon-edit icon-fw mr-2 mr-sm-1"></i>Logout
-                                </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                        </div>
-                        <!-- /dropdown option -->
-
-                    </li>
-                </ul>
-                <!-- /header menu -->
 
             </div>
             <!-- Header Menu Wrapper -->

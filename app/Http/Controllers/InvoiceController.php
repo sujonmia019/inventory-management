@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\InvoiceDetails;
 use App\Models\Payment;
+use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -221,11 +222,55 @@ class InvoiceController extends Controller
         return view('pages.invoice.pending', compact('Pending'));
     }
 
+    // invoice id wise show data
     public function invoiceApproveIdCall($id){
-        $ApproveInvoice = Invoice::findOrFail($id)->first();
+        $ApproveInvoice = Invoice::findOrFail($id);
         $InvoiceDetail = InvoiceDetails::with('product','category')->where('invoice_id', $id)->get();
         $Payment = Payment::where('invoice_id', $id)->first();
         return view('pages.invoice.invoice-approve', compact('ApproveInvoice','InvoiceDetail','Payment'));
     }
+
+    // invoice approve
+    public function invoiceApproveStore(Request $request, $id){
+        $invoice_id = $request->invoice_id;
+        $Invoice_Details = InvoiceDetails::where('id',$invoice_id)->get();
+        foreach ($Invoice_Details as $value) {
+            dd($value->unit_price);
+            // $invoice_details = InvoiceDetails::where('id', $value->id)->first();
+            // $product = Product::where('id', $invoice_details->product_id)->first();
+            // if ($product->quantity < $request->selling_qty[$value->selling_qty]) {
+            //     $notification = array(
+            //         'message'   =>  'Sorry! you approve maximum value',
+            //         'alert-type'    =>  'error'
+            //     );
+
+            //     return back()->with($notification);
+            // }
+
+        }
+
+        $invoice = Invoice::findOrFail($id)->update([
+            'approved_by' => Auth::user()->id,
+            'status' =>  true
+        ]);
+
+        foreach ($Invoice_Details as $values) {
+            $invoice_details = InvoiceDetails::where('id', $values->id)->first();
+
+            $product = Product::where('id', $invoice_details->product_id)->first();
+            $$product->quantity = ($product->quantity - $invoice_selling[$key]);
+        }
+
+        if ($product->quantity) {
+            $notification = array(
+                'message'   =>  'Invoice Approve Successfull',
+                'alert-type'    =>  'success'
+            );
+
+            return redirect()->route('invoice.approve.index')->back()->with($notification);
+        }
+
+    }
+
 
 }

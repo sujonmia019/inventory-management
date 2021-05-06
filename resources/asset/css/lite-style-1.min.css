@@ -3183,7 +3183,10 @@ a.btn.disabled,
 fieldset:disabled a.btn {
     pointer-events: none
 }
-
+.btn-color{
+    background: #003366;
+    color: #fff !important;
+}
 .btn-primary {
     color: #fff;
     background-color: #038fde;

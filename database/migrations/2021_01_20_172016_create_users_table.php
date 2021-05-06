@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('email', 100)->unique();
             $table->string('phone')->unique()->nullable();
             $table->string('avatar')->nullable();
-            $table->enum('gender',['1','2'])->comment('1=male,2=female');
+            $table->enum('gender',['Male','Female']);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('status')->default(true)->comment('true=active, false=deactive');

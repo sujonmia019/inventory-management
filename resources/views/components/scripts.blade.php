@@ -1,5 +1,5 @@
 
-<script src="assets/js/handlebars.min.js"></script>
+<script src="{{ asset('assets/js/handlebars.min.js') }}"></script>
 <script>
     (function($){
 

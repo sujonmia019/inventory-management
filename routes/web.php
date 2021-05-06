@@ -10,6 +10,7 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UnitsController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -24,9 +25,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes(['register' => false]);
 
@@ -34,7 +35,12 @@ Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('aut
 
 // Route Grouping
 Route::group(['middleware' => 'auth'], function () {
-
+    // Profile 
+    Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::post('profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    // Password Change 
+    Route::get('profile/security', [ProfileController::class, 'passwordChange'])->name('profile.password.change');
+    Route::put('profile/security/{id}', [ProfileController::class, 'passwordChangeUpdate'])->name('profile.password.update');
     // Supplier
     Route::resource('supplier', SupplierController::class);
     // Customer
@@ -61,4 +67,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('invoices/approve', [InvoiceController::class, 'invoiceApprove'])->name('invoice.approve.index');
     Route::get('invoices/pending', [InvoiceController::class, 'invoicePending'])->name('invoice.pending.index');
     Route::get('invoices/approve/{id}', [InvoiceController::class, 'invoiceApproveIdCall'])->name('invoice.approve.id');
+    Route::post('invoice/approve/store/{id}', [InvoiceController::class, 'invoiceApproveStore'])->name('invoice.approve.store');
 });
