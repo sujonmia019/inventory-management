@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\Customer;
 use App\Models\Invoice;
-use App\Models\InvoiceDetails;
 use App\Models\Payment;
 use App\Models\Product;
+use App\Models\Category;
+use App\Models\Customer;
 use App\Models\Supplier;
+use PDF;
 use Illuminate\Http\Request;
+use App\Models\InvoiceDetails;
 use Illuminate\Support\Facades\Auth;
 
 class InvoiceController extends Controller
@@ -164,7 +165,11 @@ class InvoiceController extends Controller
      */
     public function show($id)
     {
-        return "<h1>Invoice details ".$id."</h1>";
+        $invoice = Invoice::with('invoiceDetails')->findOrFail($id);
+        $invoiceDetails = InvoiceDetails::with('product','category')->where('invoice_id', $id)->get();
+        $payment = Payment::where('invoice_id', $id)->first();
+        $pdf = PDF::loadView('pdf.invoice', compact('invoice','invoiceDetails','payment'));
+        return $pdf->stream();
     }
 
     /**
@@ -268,8 +273,10 @@ class InvoiceController extends Controller
         );
 
         return redirect()->route('invoice.approve.index')->with($notification);
-
     }
+
+    // invoice pdf 
+
 
 
 }

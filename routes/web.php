@@ -36,11 +36,15 @@ Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('aut
 // Route Grouping
 Route::group(['middleware' => 'auth'], function () {
     // Profile 
-    Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
-    Route::post('profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('profile', [ProfileController::class, 'index'])
+    ->name('profile.index');
+    Route::post('profile/update', [ProfileController::class, 'update'])
+    ->name('profile.update');
     // Password Change 
-    Route::get('profile/security', [ProfileController::class, 'passwordChange'])->name('profile.password.change');
-    Route::put('profile/security/{id}', [ProfileController::class, 'passwordChangeUpdate'])->name('profile.password.update');
+    Route::get('profile/security', [ProfileController::class, 'passwordChange'])
+    ->name('profile.password.change');
+    Route::put('profile/security/{id}', [ProfileController::class, 'passwordChangeUpdate'])
+    ->name('profile.password.update');
     // Supplier
     Route::resource('supplier', SupplierController::class);
     // Customer
@@ -53,19 +57,32 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('product', ProductController::class);
     // Purchase
     Route::resource('purchase', PurchaseController::class);
-    Route::get('purchase/approve/{id}', [PurchaseController::class,'purchaseApprove'])->name('purchase.approved');
+    Route::get('purchase/approve/{id}', [PurchaseController::class,'purchaseApprove'])
+    ->name('purchase.approved');
     // Ajax Category
-    Route::get('categorys', [AjaxController::class,'getCategory'])->name('categories');
+    Route::get('categorys', [AjaxController::class,'getCategory'])
+    ->name('categories');
     // Ajax Product Name
-    Route::get('products', [AjaxController::class,'getProduct'])->name('products');
+    Route::get('products', [AjaxController::class,'getProduct'])
+    ->name('products');
     // Ajax Product Stock
-    Route::get('product-stock', [AjaxController::class,'getProductStock'])->name('product.stock');
+    Route::get('product-stock', [AjaxController::class,'getProductStock'])
+    ->name('product.stock');
     // Ajax Product Price
-    Route::get('product-price', [AjaxController::class,'getProductPrice'])->name('product.price');
+    Route::get('product-price', [AjaxController::class,'getProductPrice'])
+    ->name('product.price');
     // Invoice
     Route::resource('invoice', InvoiceController::class);
-    Route::get('invoices/approve', [InvoiceController::class, 'invoiceApprove'])->name('invoice.approve.index');
-    Route::get('invoices/pending', [InvoiceController::class, 'invoicePending'])->name('invoice.pending.index');
-    Route::get('invoices/approve/{id}', [InvoiceController::class, 'invoiceApproveIdCall'])->name('invoice.approve.id');
-    Route::post('invoice/approve/store/{id}', [InvoiceController::class, 'invoiceApproveStore'])->name('invoice.approve.store');
+    // invoice approved 
+    Route::get('invoices/approve', [InvoiceController::class, 'invoiceApprove'])
+    ->name('invoice.approve.index');
+    Route::get('invoices/approve/{id}', [InvoiceController::class, 'invoiceApproveIdCall'])
+    ->name('invoice.approve.id');
+    Route::post('invoice/approve/store/{id}', [InvoiceController::class, 'invoiceApproveStore'])
+    ->name('invoice.approve.store');
+    // invoice pendding
+    Route::get('invoices/pending', [InvoiceController::class, 'invoicePending'])
+    ->name('invoice.pending.index');
+    
+    
 });

@@ -41,7 +41,7 @@
                                             <td>
 
                                                 <div>
-                                                    <a href="{{ route('invoice.show', $Approves->id) }}" class="bg-info text-light px-3 py-1" data-toggle="tooltip" data-placement="top" title="invoice view"><i class="fa fa-eye fa-sm"></i></a>
+                                                    <a href="{{ route('invoice.show', $Approves->id) }}" class=" btn-secondary text-light px-3 py-1" target="_blank" data-toggle="tooltip" data-placement="top" title="invoice pdf"><i class="fa fa-print fa-sm"></i></a>
                                                 </div>
 
                                             </td>
