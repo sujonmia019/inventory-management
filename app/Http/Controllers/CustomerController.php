@@ -46,9 +46,11 @@ class CustomerController extends Controller
             'address' =>  'required|max:60',
         ]);
 
-        $image = $request->file('photo');
-        $imageName = rand().'.'.$image->getClientOriginalExtension();
-        Image::make($image)->resize(100,100)->save(public_path('assets/image/customer/').$imageName);
+        if ($request->hasFile('photo')) {
+            $image = $request->file('photo');
+            $imageName = rand().'.'.$image->getClientOriginalExtension();
+            $image->move(public_path('assets/image/customer/'),$imageName);
+        }
 
         $CustomerCreate = Customer::create([
             'name'  =>  $request->full_name,
@@ -111,10 +113,13 @@ class CustomerController extends Controller
             'address' =>  'required|max:60'
         ]);
 
-        $image = $request->file('photo');
-        if (isset($image)) {
-            $imageName = $Customer->avatar;
-            Image::make($image)->resize(100,100)->save(public_path('assets/image/customer/').$imageName);
+        
+        if ($request->hasFile('photo')) {
+            unlink(public_path('assets/image/customer/').$Customer->avatar);
+
+            $image = $request->file('photo');
+            $imageName = rand().'.'.$image->getClientOriginalExtension();
+            $image->move(public_path('assets/image/customer/'),$imageName);
         }
         else{
             $imageName = $Customer->avatar;
