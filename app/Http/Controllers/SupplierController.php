@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Image;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Image;
 
 class SupplierController extends Controller
 {
@@ -46,9 +47,11 @@ class SupplierController extends Controller
             'address' =>  'required|max:60',
         ]);
 
-        $image = $request->file('photo');
-        $imageName = rand().'.'.$image->getClientOriginalExtension();
-        Image::make($image)->resize(100,100)->save(public_path('assets/image/supplier/').$imageName);
+        if($request->hasFile('photo')){
+            $image = $request->file('photo');
+            $imageName = rand().'.'.$image->getClientOriginalExtension();
+            $image->move(public_path('assets/image/supplier/'),$imageName);
+        }
 
         $SupplierCreate = Supplier::create([
             'name'  =>  $request->full_name,
@@ -110,10 +113,10 @@ class SupplierController extends Controller
             'address' =>  'required|max:60'
         ]);
 
-        $image = $request->file('photo');
-        if (isset($image)) {
+        if ($request->hasFile('photo')) {
+            $image = $request->file('photo');
             $imageName = $supplier->avatar;
-            Image::make($image)->resize(100,100)->save(public_path('assets/image/supplier/').$imageName);
+            $image->move(public_path('assets/image/supplier/'),$imageName);
         }
         else{
             $imageName = $supplier->avatar;
